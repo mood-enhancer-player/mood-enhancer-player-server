@@ -40,9 +40,25 @@ module.exports = gql`
     email: String!
   }
 
+  type Song {
+    title: String!
+    descriptions: String!
+    artist: String!
+    songDuration: String!
+    album: String!
+  }
+
+  # type Playlist {
+  #   title: String!
+  #   album: String!
+  #   songSize: String!
+  # }
+
   type Query {
+    me: User
     getPosts: [Post]
     getPost(postId: ID!): Post
+    getPlaylist: [Song]
   }
 
   type Mutation {
@@ -55,7 +71,7 @@ module.exports = gql`
     likePost(postId: ID!): Post!
   }
 
-  type Subscription {
-    newPost: Post!
-  }
+  # type Subscription {
+  #   newPost: Post!
+  # }
 `;

@@ -5,12 +5,12 @@ const typeDefs = require("./graphql/typedefs");
 const resolvers = require("./graphql/resolvers");
 const { MONGODB } = require("./config");
 
-const pubsub = new PubSub();
+// const pubsub = new PubSub();
 
 const server = new ApolloServer({
   typeDefs,
   resolvers,
-  context: ({ req }) => ({ req, pubsub }),
+  context: ({ req }) => ({ req }),
 });
 
 mongoose
@@ -20,5 +20,5 @@ mongoose
   });
 
 server.listen(9090, () => {
-  console.log("Server is runing on http://localhost:3000");
+  console.log("Server is runing on http://localhost:9090");
 });

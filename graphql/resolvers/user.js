@@ -1,27 +1,32 @@
 const bcrypt = require("bcryptjs");
-const jwt = require("jsonwebtoken");
 const { UserInputError } = require("apollo-server");
+
+const checkAuth = require("../../common/utils/checkAuth");
 
 const {
   validateRegisterInput,
   validateLoginInput,
-} = require("../../util/validators");
-const { SECRET_KEY } = require("../../config");
+} = require("../../common/utils/validators");
+const generateToken = require("../../common/utils/jwtGenerator");
 const User = require("../../models/User");
 
-const generateToken = (user) => {
-  return jwt.sign(
-    {
-      id: user.id,
-      email: user.email,
-      username: user.username,
-    },
-    SECRET_KEY,
-    { expiresIn: "1h" }
-  );
-};
-
 module.exports = {
+  Query: {
+    async me(_, __, context) {
+      try {
+        const { id } = checkAuth(context);
+        console.log(id);
+        const user = await User.findById(id);
+        console.log(user);
+        if (user) {
+          return user;
+        }
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+  },
   Mutation: {
     async login(_, { username, password }) {
       const { errors, valid } = validateLoginInput(username, password);
