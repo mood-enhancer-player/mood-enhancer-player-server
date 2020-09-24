@@ -8,6 +8,6 @@ module.exports = generateToken = (user) => {
       id,
     },
     SECRET_KEY,
-    { expiresIn: "1h" }
+    { expiresIn: "12h" }
   );
 };

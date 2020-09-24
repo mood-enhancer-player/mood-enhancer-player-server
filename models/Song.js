@@ -27,10 +27,20 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
+    songFile: {
+      type: String,
+      required: true,
+      trim: true,
+    },
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "User",
+      require: true,
+    },
   },
   {
     timestamps: true,
   }
 );
 
-module.exports = { songSchema };
+module.exports = model("Song", songSchema);

@@ -40,12 +40,22 @@ module.exports = gql`
     email: String!
   }
 
-  type Song {
+  input SongInput {
     title: String!
-    descriptions: String!
+    description: String!
     artist: String!
     songDuration: String!
     album: String!
+    songFile: String!
+  }
+
+  type Song {
+    title: String!
+    description: String!
+    artist: String!
+    songDuration: String!
+    album: String!
+    songFile: String!
   }
 
   # type Playlist {
@@ -58,7 +68,9 @@ module.exports = gql`
     me: User
     getPosts: [Post]
     getPost(postId: ID!): Post
-    getPlaylist: [Song]
+
+    getAllSongs: [Song]
+    getPlayList: [Song]
   }
 
   type Mutation {
@@ -69,6 +81,9 @@ module.exports = gql`
     createComment(postId: String!, body: String!): Post!
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
+
+    addToPlayList(songId: ID!): String!
+    uploadSong(songData: SongInput!): Song!
   }
 
   # type Subscription {

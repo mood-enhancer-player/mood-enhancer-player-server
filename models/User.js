@@ -19,10 +19,27 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
-    playlist: [songSchema],
-    podcast: [songSchema],
-    artists: [songSchema],
-    albums: [songSchema],
+    playList: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Song",
+        require: true,
+      },
+    ],
+    artists: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Song",
+        require: true,
+      },
+    ],
+    albums: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Song",
+        require: true,
+      },
+    ],
   },
   {
     timestamps: true,
