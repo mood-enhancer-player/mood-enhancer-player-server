@@ -13,6 +13,7 @@ const User = require("../../models/User");
 module.exports = {
   Query: {
     async me(_, __, context) {
+      console.log("me");
       try {
         const { id } = checkAuth(context);
         console.log(id);

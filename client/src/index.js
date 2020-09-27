@@ -6,11 +6,15 @@ import {
   ApolloProvider,
   ApolloClient,
   InMemoryCache,
-  HttpLink,
   ApolloLink,
 } from "@apollo/client";
+import { createUploadLink } from "apollo-upload-client";
 
-const httpLink = new HttpLink({ uri: "http://localhost:9090/" });
+// const httpLink = new HttpLink({ uri: "http://localhost:9090/graphql" });
+
+const httpLink = createUploadLink({
+  uri: "http://localhost:9090/graphql",
+});
 
 const authLink = new ApolloLink((operation, forward) => {
   // Retrieve the authorization token from local storage.
@@ -33,11 +37,11 @@ const client = new ApolloClient({
 });
 
 ReactDOM.render(
-  <React.StrictMode>
-    <ApolloProvider client={client}>
-      <App />
-    </ApolloProvider>
-  </React.StrictMode>,
+  // <React.StrictMode>
+  <ApolloProvider client={client}>
+    <App />
+  </ApolloProvider>,
+  // </React.StrictMode>,
   document.getElementById("root")
 );
 

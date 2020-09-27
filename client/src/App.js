@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./App.css";
 
 import { useQuery, gql } from "@apollo/client";
+import UploadSong from "./UploadSong";
 const ME = gql`
   query {
     me {
@@ -32,46 +33,13 @@ function App() {
           <h3>ID</h3> {data.me.id}
         </div>
       )}
+
+      <UploadSong />
     </div>
   );
 }
 
 export default App;
-
-// import React, { useState } from "react";
-// import "./App.css";
-
-// import { Mutation } from "react-apollo";
-// import { useQuery, gql } from "@apollo/client";
-
-// export const UPLOAD_FILE = gql`
-//   mutation uploadFile($file: Upload!) {
-//     uploadFile(file: $file) {
-//       filename
-//     }
-//   }
-// `;
-
-// function App() {
-//   return (
-//     <Mutation mutation={UPLOAD_FILE}>
-//       {(uploadFile) => (
-//         <input
-//           type="file"
-//           required
-//           onChange={({
-//             target: {
-//               validity,
-//               files: [file],
-//             },
-//           }) => validity.valid && uploadFile({ variables: { file } })}
-//         />
-//       )}
-//     </Mutation>
-//   );
-// }
-
-// export default App;
 
 // // import React from "react";
 // // import "./App.css";

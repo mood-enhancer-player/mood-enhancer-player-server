@@ -64,6 +64,14 @@ module.exports = gql`
   #   songSize: String!
   # }
 
+  # type File {
+  #   filename: String!
+  # }
+
+  type File {
+    url: String!
+  }
+
   type Query {
     me: User
     getPosts: [Post]
@@ -71,6 +79,7 @@ module.exports = gql`
 
     getAllSongs: [Song]
     getPlayList: [Song]
+    # uploads: [File]
   }
 
   type Mutation {
@@ -83,7 +92,8 @@ module.exports = gql`
     likePost(postId: ID!): Post!
 
     addToPlayList(songId: ID!): String!
-    uploadSong(songData: SongInput!): Song!
+    # uploadSong(songData: SongInput!): Song!
+    uploadSong(file: Upload!): File!
   }
 
   # type Subscription {

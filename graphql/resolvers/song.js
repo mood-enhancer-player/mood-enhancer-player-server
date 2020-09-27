@@ -1,4 +1,8 @@
 const bcrypt = require("bcryptjs");
+const path = require("path");
+const fs = require("fs");
+const uuid = require("uuid");
+
 const { UserInputError } = require("apollo-server");
 
 const checkAuth = require("../../common/utils/checkAuth");
@@ -28,20 +32,50 @@ module.exports = {
         throw new Error(err);
       }
     },
+    // uploads: () => {
+    //   // Return the record of files uploaded from your DB or API or filesystem.
+    //   return [
+    //     {
+    //       filename: "String",
+    //       mimetype: "String",
+    //       encoding: "String",
+    //     },
+    //   ];
+    // },
   },
   Mutation: {
-    async uploadSong(_, { songData }, context) {
-      try {
-        const song = await Song.create(songData);
-        console.log(song);
-        await song.save();
-        if (song) {
-          return song;
-        }
-        return new Error("Song not uploaded");
-      } catch (err) {
-        throw new Error(err);
-      }
+    // async uploadSong(_, { songData }, context) {
+    //   try {
+    //     const song = await Song.create(songData);
+    //     console.log(song);
+    //     await song.save();
+    //     if (song) {
+    //       return song;
+    //     }
+    //     return new Error("Song not uploaded");
+    //   } catch (err) {
+    //     throw new Error(err);
+    //   }
+    // },
+    uploadSong: async (parent, { file }) => {
+      const { createReadStream, filename, mimetype, encoding } = await file;
+      const id = uuid.v4();
+      const stream = createReadStream();
+      const pathName = path.join(
+        __dirname,
+        `../../public/songs/${filename}${id}`
+      );
+      await stream.pipe(fs.createWriteStream(pathName));
+      return {
+        url: `http://localhost:9090/songs/${filename}${id}`,
+      };
     },
+    // 1. Validate file metadata.
+
+    // 2. Stream file contents into cloud storage:
+    // https://nodejs.org/api/stream.html
+
+    // 3. Record the file upload in your DB.
+    // const id = await recordFile( … )
   },
 };
