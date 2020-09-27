@@ -27,12 +27,12 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
-    songFile: {
+    songURL: {
       type: String,
       required: true,
       trim: true,
     },
-    user: {
+    userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
       require: true,

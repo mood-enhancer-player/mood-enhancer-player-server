@@ -30,7 +30,7 @@ const UploadSong = () => {
     <div>
       <h1>Upload File</h1>
       <input type="file" onChange={handleFileChange} />
-      {<a href={link}>click here</a>}
+      {<a href={`${link}`}>click here</a>}
     </div>
   );
 };

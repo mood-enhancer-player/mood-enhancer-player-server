@@ -55,7 +55,7 @@ module.exports = gql`
     artist: String!
     songDuration: String!
     album: String!
-    songFile: String!
+    songURL: String!
   }
 
   # type Playlist {

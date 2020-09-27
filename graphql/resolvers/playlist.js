@@ -1,13 +1,6 @@
 const bcrypt = require("bcryptjs");
-const { UserInputError } = require("apollo-server");
-
 const checkAuth = require("../../common/utils/checkAuth");
-
-const {
-  validateRegisterInput,
-  validateLoginInput,
-} = require("../../common/utils/validators");
-const generateToken = require("../../common/utils/jwtGenerator");
+const Song = require("../../models/Song");
 const User = require("../../models/User");
 
 module.exports = {
@@ -17,6 +10,7 @@ module.exports = {
         const { id } = checkAuth(context);
         const user = await User.findById(id).populate("playList");
         if (user) {
+          console.log(user.playList);
           return user.playList;
           //   return [
           //     {
@@ -46,23 +40,29 @@ module.exports = {
   Mutation: {
     async addToPlayList(_, { songId }, context) {
       const { id } = checkAuth(context);
-      const user = await User.findById(id);
+      try {
+        const user = await User.findById(id);
+        const song = await Song.findById(songId);
+        if (!song) {
+          throw new Error("Song not Found");
+        }
 
-      const musicData = {
-        title: "test title 2",
-        album: "test album 2",
-        songDuration: "test songSize 2",
-        description: "test description 2",
-        artist: "test artist 2",
-        songDuration: "test songduration 2",
-      };
-      const res = await user.playList.push(songId);
-      await user.save();
-      //   console.log(user);
-      if (res) {
-        return "Song added into playlist sucessfully";
+        const songAlreayExistOnPlaylist = await user.playList.indexOf(songId);
+        if (songAlreayExistOnPlaylist > -1) {
+          await user.playList.splice(songAlreayExistOnPlaylist, 1);
+          await user.save();
+          return "Song is removed from playlist";
+        }
+
+        const songPlayList = await user.playList.push(songId);
+        await user.save();
+        if (songPlayList) {
+          return "Song added into playlist sucessfully";
+        }
+        return "Something went wrong";
+      } catch (err) {
+        throw new Error("Error ", err);
       }
-      return "Something went wrong";
     },
   },
 };

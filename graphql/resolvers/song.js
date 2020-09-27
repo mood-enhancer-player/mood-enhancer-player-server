@@ -7,11 +7,6 @@ const { UserInputError } = require("apollo-server");
 
 const checkAuth = require("../../common/utils/checkAuth");
 
-const {
-  validateRegisterInput,
-  validateLoginInput,
-} = require("../../common/utils/validators");
-const generateToken = require("../../common/utils/jwtGenerator");
 const User = require("../../models/User");
 const Song = require("../../models/Song");
 
@@ -20,9 +15,7 @@ module.exports = {
     async getAllSongs(_, __, context) {
       try {
         const { id } = checkAuth(context);
-        console.log(id);
         const user = await User.findById(id);
-        console.log(user);
         if (user) {
           const allSong = await Song.find({});
           return allSong;
@@ -32,43 +25,42 @@ module.exports = {
         throw new Error(err);
       }
     },
-    // uploads: () => {
-    //   // Return the record of files uploaded from your DB or API or filesystem.
-    //   return [
-    //     {
-    //       filename: "String",
-    //       mimetype: "String",
-    //       encoding: "String",
-    //     },
-    //   ];
-    // },
   },
   Mutation: {
-    // async uploadSong(_, { songData }, context) {
-    //   try {
-    //     const song = await Song.create(songData);
-    //     console.log(song);
-    //     await song.save();
-    //     if (song) {
-    //       return song;
-    //     }
-    //     return new Error("Song not uploaded");
-    //   } catch (err) {
-    //     throw new Error(err);
-    //   }
-    // },
-    uploadSong: async (parent, { file }) => {
+    uploadSong: async (_, { file }, context) => {
+      const { id } = checkAuth(context);
       const { createReadStream, filename, mimetype, encoding } = await file;
-      const id = uuid.v4();
+
+      const songId = uuid.v4();
       const stream = createReadStream();
       const pathName = path.join(
         __dirname,
-        `../../public/songs/${filename}${id}`
+        `../../public/songs/${filename + songId}`
       );
       await stream.pipe(fs.createWriteStream(pathName));
-      return {
-        url: `http://localhost:9090/songs/${filename}${id}`,
+
+      const songData = {
+        title: "title",
+        description: "description",
+        artist: "artist",
+        songDuration: "duration",
+        album: "albumname",
+        songURL: `http://localhost:9090/songs/${filename + songId}`,
+        userId: id,
       };
+
+      try {
+        const song = await Song.create(songData);
+        await song.save();
+        if (song) {
+          return {
+            url: `http://localhost:9090/songs/${filename + songId}`,
+          };
+        }
+        return new Error("Song not uploaded");
+      } catch (err) {
+        throw new Error(err);
+      }
     },
     // 1. Validate file metadata.
 
