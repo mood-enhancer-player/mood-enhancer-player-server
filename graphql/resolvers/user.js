@@ -16,9 +16,7 @@ module.exports = {
       console.log("me");
       try {
         const { id } = checkAuth(context);
-        console.log(id);
         const user = await User.findById(id);
-        console.log(user);
         if (user) {
           return user;
         }

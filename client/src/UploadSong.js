@@ -27,11 +27,13 @@ const UploadSong = () => {
   };
   console.log(link);
   return (
-    <div>
-      <h1>Upload File</h1>
-      <input type="file" onChange={handleFileChange} />
-      {<a href={`${link}`}>click here</a>}
-    </div>
+    <>
+      <div>
+        <h1>Upload Song</h1>
+        <input type="file" onChange={handleFileChange} />
+        {<a href={`${link}`}>click here</a>}
+      </div>
+    </>
   );
 };
 

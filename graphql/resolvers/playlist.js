@@ -1,4 +1,3 @@
-const bcrypt = require("bcryptjs");
 const checkAuth = require("../../common/utils/checkAuth");
 const Song = require("../../models/Song");
 const User = require("../../models/User");
@@ -12,24 +11,6 @@ module.exports = {
         if (user) {
           console.log(user.playList);
           return user.playList;
-          //   return [
-          //     {
-          //       title: "test title",
-          //       album: "test album",
-          //       songDuration: "test songSize",
-          //       description: "test description",
-          //       artist: "test artist",
-          //       songDuration: "test songduration",
-          //     },
-          //     {
-          //       title: "test title 2",
-          //       album: "test album 2",
-          //       songDuration: "test songSize 2",
-          //       description: "test description 2",
-          //       artist: "test artist 2",
-          //       songDuration: "test songduration 2",
-          //     },
-          //   ];
         }
         return new Error("User not found");
       } catch (err) {

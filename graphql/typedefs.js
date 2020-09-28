@@ -77,8 +77,10 @@ module.exports = gql`
     getPosts: [Post]
     getPost(postId: ID!): Post
 
-    getAllSongs: [Song]
-    getPlayList: [Song]
+    getSongById(songId: ID!): Song!
+    getPlayList: [Song]!
+    getRecentPlay: [Song!]!
+    getAllSongs: [Song!]!
     # uploads: [File]
   }
 
