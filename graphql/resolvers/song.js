@@ -18,6 +18,9 @@ module.exports = {
         if (user) {
           const song = await Song.findById(songId);
           if (song) {
+            // Increase playCount by 1
+            song.playCount = song.playCount + 1;
+            await song.save();
             // artist added
             const artistAlreadyExist = user.artists.includes(song.artist);
             if (!artistAlreadyExist) {
@@ -29,7 +32,6 @@ module.exports = {
               await user.albums.unshift(song.album);
             }
             await user.save();
-            console.log(user);
             // song is added to recentPlay
             const recentSongExist = user.recentPlay.includes(songId);
             if (!recentSongExist) {
@@ -58,13 +60,27 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async getMostPopular(_, __, context) {
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const mostPopular = await Song.find()
+            .limit(3)
+            .sort({ playCount: -1 });
+          return mostPopular;
+        }
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
     async getAllSongs(_, __, context) {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
         if (user) {
-          const allSong = await Song.find({});
-          return allSong;
+          const allSongs = await Song.find({});
+          return allSongs;
         }
         return new Error("Songs not found");
       } catch (err) {
@@ -92,6 +108,7 @@ module.exports = {
         songDuration: "duration",
         album: "albumname",
         songURL: `http://localhost:9090/songs/${filename + songId}`,
+        playCount: 0,
         userId: id,
       };
 

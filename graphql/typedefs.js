@@ -56,6 +56,7 @@ module.exports = gql`
     songDuration: String!
     album: String!
     songURL: String!
+    playCount: Int!
   }
 
   # type Playlist {
@@ -83,6 +84,7 @@ module.exports = gql`
     getAllSongs: [Song!]!
     getArtists: [String]!
     getAlbums: [String]!
+    getMostPopular: [Song!]!
     # uploads: [File]
   }
 
