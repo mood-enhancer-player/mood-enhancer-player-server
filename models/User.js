@@ -19,6 +19,13 @@ const userSchema = new Schema(
       type: String,
       required: true,
     },
+    recentPlay: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "Song",
+        require: true,
+      },
+    ],
     playList: [
       {
         type: Schema.Types.ObjectId,
@@ -28,16 +35,16 @@ const userSchema = new Schema(
     ],
     artists: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Song",
-        require: true,
+        type: String,
+        required: true,
+        trim: true,
       },
     ],
     albums: [
       {
-        type: Schema.Types.ObjectId,
-        ref: "Song",
-        require: true,
+        type: String,
+        required: true,
+        trim: true,
       },
     ],
   },

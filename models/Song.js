@@ -32,6 +32,11 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
+    // songImgURL: {
+    //   type: String,
+    //   required: true,
+    //   trim: true,
+    // },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
