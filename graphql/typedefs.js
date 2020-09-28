@@ -81,6 +81,8 @@ module.exports = gql`
     getPlayList: [Song]!
     getRecentPlay: [Song!]!
     getAllSongs: [Song!]!
+    getArtists: [String]!
+    getAlbums: [String]!
     # uploads: [File]
   }
 

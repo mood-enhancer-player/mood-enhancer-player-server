@@ -4,6 +4,8 @@ const usersResolvers = require("./user");
 // const likesResolvers = require("./likes");
 const playlistResolvers = require("./playlist");
 const songResolvers = require("./song");
+const artistResolvers = require("./artist");
+const albumResolvers = require("./album");
 
 module.exports = {
   // Post: {
@@ -16,6 +18,8 @@ module.exports = {
     ...usersResolvers.Query,
     ...playlistResolvers.Query,
     ...songResolvers.Query,
+    ...artistResolvers.Query,
+    ...albumResolvers.Query,
   },
 
   Mutation: {
