@@ -20,7 +20,7 @@ app.use(express.static("public"));
 app.use(cors());
 
 mongoose
-  .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true })
   .then(() => {
     console.log("Mongodb connected");
   });
