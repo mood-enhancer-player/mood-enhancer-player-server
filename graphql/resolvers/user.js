@@ -27,12 +27,12 @@ module.exports = {
     },
   },
   Mutation: {
-    async login(_, { username, password }) {
-      const { errors, valid } = validateLoginInput(username, password);
+    async login(_, { email, password }) {
+      const { errors, valid } = validateLoginInput(email, password);
       if (!valid) {
         throw new UserInputError("Error", { errors });
       }
-      const user = await User.findOne({ username });
+      const user = await User.findOne({ email });
       if (!user) {
         errors.general = "User not found";
         throw new UserInputError("User not found", { errors });
@@ -69,11 +69,11 @@ module.exports = {
 
       // make sure user doent already exists
 
-      const userExist = await User.findOne({ username });
+      const userExist = await User.findOne({ email });
       if (userExist) {
-        throw new UserInputError("User is already exist", {
+        throw new UserInputError("Email is already taken", {
           errors: {
-            username: "User is already exist",
+            email: "Email is already taken",
           },
         });
       }
