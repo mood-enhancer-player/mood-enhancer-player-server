@@ -97,7 +97,8 @@ module.exports = {
       const stream = createReadStream();
       const pathName = path.join(
         __dirname,
-        `../../public/songs/${filename + songId}`
+        // `../../public/songs/${filename + songId}`
+        `../../public/songs/${filename}`
       );
       await stream.pipe(fs.createWriteStream(pathName));
 
@@ -107,7 +108,8 @@ module.exports = {
         artist: "artist",
         songDuration: "duration",
         album: "albumname",
-        songURL: `http://localhost:9090/songs/${filename + songId}`,
+        // songURL: `http://localhost:9090/songs/${filename + songId}`,
+        songURL: `http://localhost:9090/songs/${filename}`,
         playCount: 0,
         userId: id,
       };
@@ -117,7 +119,8 @@ module.exports = {
         await song.save();
         if (song) {
           return {
-            url: `http://localhost:9090/songs/${filename + songId}`,
+            // url: `http://localhost:9090/songs/${filename + songId}`,
+            url: `http://localhost:9090/songs/${filename}`,
           };
         }
         return new Error("Song not uploaded");
