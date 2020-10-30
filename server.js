@@ -1,3 +1,4 @@
+require("dotenv").config(); // Load all environment variable
 const { ApolloServer } = require("apollo-server-express");
 const express = require("express");
 const cors = require("cors");
@@ -20,7 +21,11 @@ app.use(express.static("public"));
 app.use(cors());
 
 mongoose
-  .connect(MONGODB, { useNewUrlParser: true, useUnifiedTopology: true,useCreateIndex:true })
+  .connect(MONGODB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+    useCreateIndex: true,
+  })
   .then(() => {
     console.log("Mongodb connected");
   });

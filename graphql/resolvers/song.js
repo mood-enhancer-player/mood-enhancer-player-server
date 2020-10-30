@@ -1,6 +1,10 @@
-const path = require("path");
+// const path = require("path");
+const { extname, resolve } = require("path");
 const fs = require("fs");
-const uuid = require("uuid");
+const AWS = require("aws-sdk");
+
+// const uuid = require("uuid");
+const { v4: uuid } = require("uuid");
 
 const { UserInputError } = require("apollo-server");
 
@@ -8,6 +12,9 @@ const checkAuth = require("../../common/utils/checkAuth");
 
 const User = require("../../models/User");
 const Song = require("../../models/Song");
+const { rejects } = require("assert");
+
+// const s3 = require("./aws/s3");
 
 module.exports = {
   Query: {
@@ -93,40 +100,67 @@ module.exports = {
       const { id } = checkAuth(context);
       const { createReadStream, filename, mimetype, encoding } = await file;
 
-      const songId = uuid.v4();
-      const stream = createReadStream();
-      const pathName = path.join(
-        __dirname,
-        // `../../public/songs/${filename + songId}`
-        `../../public/songs/${filename}`
-      );
-      await stream.pipe(fs.createWriteStream(pathName));
+      const s3 = new AWS.S3({
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_ACCESS_KEY_SECRET,
+        region: "ap-south-1",
+      });
 
-      const songData = {
-        title: "title",
-        description: "description",
-        artist: "artist",
-        songDuration: "duration",
-        album: "albumname",
-        // songURL: `http://localhost:9090/songs/${filename + songId}`,
-        songURL: `http://localhost:9090/songs/${filename}`,
-        playCount: 0,
-        userId: id,
+      const params = {
+        ACL: "public-read",
+        Bucket: process.env.AWS_S3_BUCKET,
+        Key: filename,
+        Body: createReadStream(),
       };
 
-      try {
-        const song = await Song.create(songData);
-        await song.save();
-        if (song) {
-          return {
-            // url: `http://localhost:9090/songs/${filename + songId}`,
-            url: `http://localhost:9090/songs/${filename}`,
-          };
-        }
-        return new Error("Song not uploaded");
-      } catch (err) {
-        throw new Error(err);
-      }
+      const songUrl = new Promise((resolve, reject) => {
+        s3.upload(params, (err, data) => {
+          if (err) {
+            reject(err);
+          }
+          console.log(`File uploaded succesfully ${data.Location}`);
+          resolve(data.Location);
+        });
+      });
+
+      return {
+        url: await songUrl,
+      };
+
+      // const songId = uuid.v4();
+      // const stream = createReadStream();
+      // const pathName = path.join(
+      //   __dirname,
+      //   // `../../public/songs/${filename + songId}`
+      //   `../../public/songs/${filename}`
+      // );
+      // await stream.pipe(fs.createWriteStream(pathName));
+
+      // const songData = {
+      //   title: "title",
+      //   description: "description",
+      //   artist: "artist",
+      //   songDuration: "duration",
+      //   album: "albumname",
+      //   // songURL: `http://localhost:9090/songs/${filename + songId}`,
+      //   songURL: `http://localhost:9090/songs/${filename}`,
+      //   playCount: 0,
+      //   userId: id,
+      // };
+
+      // try {
+      //   const song = await Song.create(songData);
+      //   await song.save();
+      //   if (song) {
+      //     return {
+      //       // url: `http://localhost:9090/songs/${filename + songId}`,
+      //       url: `http://localhost:9090/songs/${filename}`,
+      //     };
+      //   }
+      //   return new Error("Song not uploaded");
+      // } catch (err) {
+      //   throw new Error(err);
+      // }
     },
     // 1. Validate file metadata.
 
