@@ -101,32 +101,63 @@ module.exports = {
       // { file },
       context
     ) => {
-      const { id } = checkAuth(context);
-      const {
-        createReadStream: createReadStreamForSong,
-        filename: songFilename,
-        mimetype: songMimetype,
-        encoding: songEncoding,
-      } = await songFile;
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const {
+            createReadStream: createReadStreamForSong,
+            filename: songFilename,
+            mimetype: songMimetype,
+            encoding: songEncoding,
+          } = await songFile;
 
-      const songFileOnS3 = await uploadToS3(
-        createReadStreamForSong,
-        songFilename
-      );
-      console.log("songURL", songFileOnS3.fileLocationOnS3);
+          const songFileOnS3 = await uploadToS3(
+            createReadStreamForSong,
+            songFilename
+          );
+          console.log("songURL", songFileOnS3.fileLocationOnS3);
 
-      const {
-        createReadStream: createReadStreamForCover,
-        filename: coverFilename,
-        mimetype: coverMimetype,
-        encoding: coverEncoding,
-      } = await coverFile;
+          const {
+            createReadStream: createReadStreamForCover,
+            filename: coverFilename,
+            mimetype: coverMimetype,
+            encoding: coverEncoding,
+          } = await coverFile;
 
-      const coverFileOnS3 = await uploadToS3(
-        createReadStreamForCover,
-        coverFilename
-      );
-      console.log("coverURL", coverFileOnS3.fileLocationOnS3);
+          const coverFileOnS3 = await uploadToS3(
+            createReadStreamForCover,
+            coverFilename
+          );
+          console.log("coverURL", coverFileOnS3.fileLocationOnS3);
+
+          const songObject = {
+            title,
+            description,
+            artist,
+            album,
+            songURL: songFileOnS3.fileLocationOnS3,
+            coverURL: coverFileOnS3.fileLocationOnS3,
+            playCount: 0,
+            userId: id,
+          };
+
+          const song = await Song.create(songObject);
+          await song.save();
+          if (song) {
+            return {
+              url:
+                songFileOnS3.fileLocationOnS3 +
+                " " +
+                coverFileOnS3.fileLocationOnS3,
+            };
+          }
+          return new Error("Song not uploaded");
+        }
+        return new Error("User not authorize to upload the song");
+      } catch (err) {
+        throw new Error(err);
+      }
 
       // const { title, description, artist, album } = songInput;
 
@@ -153,10 +184,6 @@ module.exports = {
       //   coverFilename
       // );
       // console.log("coverURL", coverFileOnS3.fileLocationOnS3);
-
-      return {
-        url: songFileOnS3.fileLocationOnS3 + coverFileOnS3.fileLocationOnS3,
-      };
 
       // Store Into LocalDiskStorage Of Server
       // const songId = uuid.v4();

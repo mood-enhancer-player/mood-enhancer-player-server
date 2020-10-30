@@ -17,11 +17,6 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
-    songDuration: {
-      type: String,
-      required: true,
-      trim: true,
-    },
     album: {
       type: String,
       required: true,
@@ -37,11 +32,11 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
-    // songImgURL: {
-    //   type: String,
-    //   required: true,
-    //   trim: true,
-    // },
+    coverURL: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",
