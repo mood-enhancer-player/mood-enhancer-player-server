@@ -40,24 +40,14 @@ module.exports = gql`
     email: String!
   }
 
-  input SongInput {
-    title: String!
-    description: String!
-    artist: String!
-    songDuration: String!
-    album: String!
-    songFile: String!
-  }
-
-  type Song {
-    title: String!
-    description: String!
-    artist: String!
-    songDuration: String!
-    album: String!
-    songURL: String!
-    playCount: Int!
-  }
+  # input SongInput {
+  #   title: String!
+  #   description: String!
+  #   artist: String!
+  #   # songDuration: String!
+  #   album: String!
+  #   # songFile: String!
+  # }
 
   # type Playlist {
   #   title: String!
@@ -71,6 +61,15 @@ module.exports = gql`
 
   type File {
     url: String!
+  }
+
+  type Song {
+    title: String!
+    description: String!
+    artist: String!
+    album: String!
+    songURL: File!
+    playCount: Int!
   }
 
   type Query {
@@ -99,7 +98,15 @@ module.exports = gql`
 
     addToPlayList(songId: ID!): String!
     # uploadSong(songData: SongInput!): Song!
-    uploadSong(file: Upload!): File!
+    # uploadSong(file: Upload!, songInput: SongInput): File!
+    uploadSong(
+      songFile: Upload!
+      coverFile: Upload!
+      title: String!
+      description: String!
+      album: String
+      artist: String
+    ): File!
   }
 
   # type Subscription {

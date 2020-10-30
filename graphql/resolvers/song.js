@@ -95,14 +95,67 @@ module.exports = {
     },
   },
   Mutation: {
-    uploadSong: async (_, { file }, context) => {
+    uploadSong: async (
+      _,
+      { songFile, coverFile, title, description, artist, album },
+      // { file },
+      context
+    ) => {
       const { id } = checkAuth(context);
-      const { createReadStream, filename, mimetype, encoding } = await file;
+      const {
+        createReadStream: createReadStreamForSong,
+        filename: songFilename,
+        mimetype: songMimetype,
+        encoding: songEncoding,
+      } = await songFile;
 
-      const { SongURL } = await uploadToS3(createReadStream, filename);
-      console.log("songURL", SongURL);
+      const songFileOnS3 = await uploadToS3(
+        createReadStreamForSong,
+        songFilename
+      );
+      console.log("songURL", songFileOnS3.fileLocationOnS3);
+
+      const {
+        createReadStream: createReadStreamForCover,
+        filename: coverFilename,
+        mimetype: coverMimetype,
+        encoding: coverEncoding,
+      } = await coverFile;
+
+      const coverFileOnS3 = await uploadToS3(
+        createReadStreamForCover,
+        coverFilename
+      );
+      console.log("coverURL", coverFileOnS3.fileLocationOnS3);
+
+      // const { title, description, artist, album } = songInput;
+
+      // const { id } = checkAuth(context);
+      // const {
+      //   createReadStream,
+      //   songFilename,
+      //   songMimetype,
+      //   songEncoding,
+      // } = await songFile;
+
+      // const songFileOnS3 = await uploadToS3(createReadStream, songFilename);
+      // console.log("songURL", songFileOnS3.fileLocationOnS3);
+
+      // const {
+      //   createReadStreamForCover,
+      //   coverFilename,
+      //   coverMimetype,
+      //   coverEncoding,
+      // } = await coverFile;
+
+      // const coverFileOnS3 = await uploadToS3(
+      //   createReadStreamForCover,
+      //   coverFilename
+      // );
+      // console.log("coverURL", coverFileOnS3.fileLocationOnS3);
+
       return {
-        url: SongURL,
+        url: songFileOnS3.fileLocationOnS3 + coverFileOnS3.fileLocationOnS3,
       };
 
       // Store Into LocalDiskStorage Of Server

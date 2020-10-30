@@ -24,7 +24,7 @@ const uploadToS3 = async (stream, filename) => {
   });
 
   return {
-    SongURL: await fileLocationOnS3,
+    fileLocationOnS3: await fileLocationOnS3,
   };
 };
 

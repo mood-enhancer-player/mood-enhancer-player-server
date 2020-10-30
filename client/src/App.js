@@ -3,6 +3,7 @@ import "./App.css";
 
 import { useQuery, gql } from "@apollo/client";
 import UploadSong from "./UploadSong";
+import UploadSongData from "./UploadSongData";
 const ME = gql`
   query {
     me {
@@ -34,7 +35,8 @@ function App() {
         </div>
       )}
 
-      <UploadSong />
+      <UploadSongData />
+      {/* <UploadSong /> */}
     </div>
   );
 }
