@@ -33,7 +33,7 @@ const userSchema = new Schema(
         require: true,
       },
     ],
-    artists: [
+    singers: [
       {
         type: String,
         required: true,

@@ -36,9 +36,9 @@ const UploadSongData = () => {
   const classes = useStyles();
 
   const [values, setValues] = useState({
-    title: "",
+    name: "",
     description: "",
-    artist: "",
+    singer: "",
     album: "",
   });
 
@@ -95,9 +95,9 @@ const UploadSongData = () => {
       variables: {
         songFile: songFile.file,
         coverFile: coverFile.file,
-        title: values.title,
+        name: values.name,
         description: values.description,
-        artist: values.artist,
+        singer: values.singer,
         album: values.album,
       },
     });
@@ -131,11 +131,11 @@ const UploadSongData = () => {
 
           <TextField
             id="outlined-flexible"
-            label="Title"
+            label="Name"
             variant="outlined"
             color="primary"
             type="text"
-            name="title"
+            name="name"
             onChange={onChange}
             size="small"
             className={classes.textField}
@@ -157,11 +157,11 @@ const UploadSongData = () => {
         <div>
           <TextField
             id="outlined-flexible"
-            label="Artist"
+            label="Singer"
             variant="outlined"
             color="primary"
             type="text"
-            name="artist"
+            name="singer"
             onChange={onChange}
             size="small"
             className={classes.textField}
@@ -221,17 +221,17 @@ const UploadSongData_MUTATION = gql`
   mutation uploadSong(
     $songFile: Upload!
     $coverFile: Upload!
-    $title: String!
+    $name: String!
     $description: String!
-    $artist: String!
+    $singer: String!
     $album: String!
   ) {
     uploadSong(
       songFile: $songFile
       coverFile: $coverFile
-      title: $title
+      name: $name
       description: $description
-      artist: $artist
+      singer: $singer
       album: $album
     ) {
       url

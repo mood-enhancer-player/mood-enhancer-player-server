@@ -64,11 +64,13 @@ module.exports = gql`
   }
 
   type Song {
-    title: String!
+    _id: String!
+    name: String!
     description: String!
-    artist: String!
+    singer: String!
     album: String!
-    songURL: File!
+    musicSrc: String!
+    cover: String!
     playCount: Int!
   }
 
@@ -102,10 +104,10 @@ module.exports = gql`
     uploadSong(
       songFile: Upload!
       coverFile: Upload!
-      title: String!
+      name: String!
       description: String!
       album: String
-      artist: String
+      singer: String
     ): File!
   }
 

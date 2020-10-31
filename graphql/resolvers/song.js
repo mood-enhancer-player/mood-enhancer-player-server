@@ -27,10 +27,10 @@ module.exports = {
             // Increase playCount by 1
             song.playCount = song.playCount + 1;
             await song.save();
-            // artist added
-            const artistAlreadyExist = user.artists.includes(song.artist);
-            if (!artistAlreadyExist) {
-              await user.artists.unshift(song.artist);
+            // singer added
+            const singerAlreadyExist = user.singers.includes(song.singer);
+            if (!singerAlreadyExist) {
+              await user.singers.unshift(song.singer);
             }
             // album added
             const albumAlreadyExist = user.albums.includes(song.album);
@@ -44,6 +44,21 @@ module.exports = {
               await user.recentPlay.unshift(songId);
               await user.save();
             }
+            // // send 3 songs list
+            // const allSongs = await Song.find();
+            // const index = allSongs.findIndex((oneSong, index) => {
+            //   if (String(oneSong._id) == songId) {
+            //     return index;
+            //   }
+            // });
+            // const audioList = [];
+            // audioList.push(
+            //   allSongs[(index - 1 + allSongs.length) % allSongs.length]
+            // ); // First
+            // audioList.push(allSongs[index]); // Middle
+            // audioList.push(allSongs[(index + 1) % allSongs.length]); // Last
+            // console.log(audioList);
+            // return audioList;
             return song;
           } else {
             throw new UserInputError("Song not found");
@@ -97,7 +112,7 @@ module.exports = {
   Mutation: {
     uploadSong: async (
       _,
-      { songFile, coverFile, title, description, artist, album },
+      { songFile, coverFile, name, description, singer, album },
       // { file },
       context
     ) => {
@@ -132,12 +147,12 @@ module.exports = {
           console.log("coverURL", coverFileOnS3.fileLocationOnS3);
 
           const songObject = {
-            title,
+            name,
             description,
-            artist,
+            singer,
             album,
-            songURL: songFileOnS3.fileLocationOnS3,
-            coverURL: coverFileOnS3.fileLocationOnS3,
+            musicSrc: songFileOnS3.fileLocationOnS3,
+            cover: coverFileOnS3.fileLocationOnS3,
             playCount: 0,
             userId: id,
           };

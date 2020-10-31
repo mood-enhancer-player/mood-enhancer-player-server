@@ -2,7 +2,7 @@ const { model, Schema } = require("mongoose");
 
 const songSchema = new Schema(
   {
-    title: {
+    name: {
       type: String,
       required: true,
       trim: true,
@@ -12,7 +12,7 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
-    artist: {
+    singer: {
       type: String,
       required: true,
       trim: true,
@@ -22,7 +22,7 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
-    songURL: {
+    musicSrc: {
       type: String,
       required: true,
       trim: true,
@@ -32,7 +32,7 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
-    coverURL: {
+    cover: {
       type: String,
       required: true,
       trim: true,
