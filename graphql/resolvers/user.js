@@ -13,7 +13,6 @@ const User = require("../../models/User");
 module.exports = {
   Query: {
     async me(_, __, context) {
-      console.log("me");
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
@@ -21,6 +20,18 @@ module.exports = {
           return user;
         }
         return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getAllUsers(_, __, context) {
+      try {
+        const { id } = checkAuth(context);
+        const users = await User.find({});
+        if (users) {
+          return users;
+        }
+        return new Error("Users not found");
       } catch (err) {
         throw new Error(err);
       }
