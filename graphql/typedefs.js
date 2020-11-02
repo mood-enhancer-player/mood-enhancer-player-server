@@ -74,6 +74,11 @@ module.exports = gql`
     playCount: Int!
   }
 
+  # input SearchInput {
+  #   songName: String!
+  #   singerName: String!
+  # }
+
   type Query {
     me: User
     getAllUsers: [User]!
@@ -87,6 +92,7 @@ module.exports = gql`
     getArtists: [String]!
     getAlbums: [String]!
     getMostPopular: [Song!]!
+    searchSong(songName: String, singerName: String): [Song]!
     # uploads: [File]
   }
 
