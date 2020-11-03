@@ -72,6 +72,8 @@ module.exports = gql`
     musicSrc: String!
     cover: String!
     playCount: Int!
+    createdAt: String!
+    updatedAt: String!
   }
 
   # input SearchInput {
