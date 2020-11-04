@@ -4,13 +4,34 @@ const User = require("../../models/User");
 
 module.exports = {
   Query: {
+    //   async getPlayList(_, __, context) {
+    //     try {
+    //       const { id } = checkAuth(context);
+    //       const user = await User.findById(id).populate("playList");
+    //       if (user) {
+    //         console.log(user.playList);
+    //         return user.playList;
+    //       }
+    //       return new Error("User not found");
+    //     } catch (err) {
+    //       throw new Error(err);
+    //     }
+    //   },
+    // },
     async getPlayList(_, __, context) {
       try {
+        const perticularUserPlayList = [];
         const { id } = checkAuth(context);
         const user = await User.findById(id).populate("playList");
         if (user) {
-          console.log(user.playList);
-          return user.playList;
+          const allSongs = await Song.find({});
+          allSongs.forEach(({ _id, name, singer }) => {
+            if (user.playList.includes(name)) {
+              perticularUserPlayList.push({ _id, name, singer });
+            }
+          });
+          console.log("Perticlular user playlist", perticularUserPlayList);
+          return perticularUserPlayList;
         }
         return new Error("User not found");
       } catch (err) {
@@ -18,6 +39,7 @@ module.exports = {
       }
     },
   },
+
   Mutation: {
     async addToPlayList(_, { songId }, context) {
       const { id } = checkAuth(context);

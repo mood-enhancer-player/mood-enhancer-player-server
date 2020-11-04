@@ -6,11 +6,17 @@ module.exports = {
   Query: {
     async getAlbums(_, __, context) {
       try {
+        const perticularUserAlbums = [];
         const { id } = checkAuth(context);
         const user = await User.findById(id);
         if (user) {
-          console.log(user.albums);
-          return user.albums;
+          const allSongs = await Song.find({});
+          allSongs.forEach((song) => {
+            if (user.albums.includes(song.album)) {
+              perticularUserAlbums.push(song);
+            }
+          });
+          return perticularUserAlbums;
         }
         return new Error("User not found");
       } catch (err) {

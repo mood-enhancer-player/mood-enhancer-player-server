@@ -64,7 +64,7 @@ module.exports = gql`
   }
 
   type Song {
-    _id: String!
+    _id: ID!
     name: String!
     description: String!
     singer: String!
@@ -98,7 +98,7 @@ module.exports = gql`
     getRecentPlay: [Song!]!
     getAllSongs: [Song!]!
     getArtists: [Artist]!
-    getAlbums: [String]!
+    getAlbums: [Song]!
     getMostPopular: [Song!]!
     searchSong(songName: String, singerName: String): [Song]!
     # uploads: [File]
