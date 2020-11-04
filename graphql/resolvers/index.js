@@ -28,6 +28,7 @@ module.exports = {
     ...usersResolvers.Mutation,
     ...playlistResolvers.Mutation,
     ...songResolvers.Mutation,
+    ...artistResolvers.Mutation,
     // ...postsResolvers.Mutation,
     // ...commentsResolvers.Mutation,
     // ...likesResolvers.Mutation,

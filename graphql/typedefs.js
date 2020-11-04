@@ -118,6 +118,7 @@ module.exports = gql`
       album: String
       singer: String
     ): File!
+    addArtist(name: String!, singerProfileFile: Upload!): File!
   }
 
   # type Subscription {
