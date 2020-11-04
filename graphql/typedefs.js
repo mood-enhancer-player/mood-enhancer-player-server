@@ -76,6 +76,12 @@ module.exports = gql`
     updatedAt: String!
   }
 
+  type Artist {
+    _id: String!
+    name: String!
+    singerProfileFile: String!
+  }
+
   # input SearchInput {
   #   songName: String!
   #   singerName: String!
@@ -91,7 +97,7 @@ module.exports = gql`
     getPlayList: [Song]!
     getRecentPlay: [Song!]!
     getAllSongs: [Song!]!
-    getArtists: [String]!
+    getArtists: [Artist]!
     getAlbums: [String]!
     getMostPopular: [Song!]!
     searchSong(songName: String, singerName: String): [Song]!
