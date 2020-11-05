@@ -13,11 +13,10 @@ module.exports = {
         if (user) {
           const allArtists = await Artist.find({});
           allArtists.forEach(({ _id, name, singerProfileFile }) => {
-            if (user.singers.includes(name)) {
+            if (!user.singers.includes(name)) {
               perticularUserArtist.push({ _id, name, singerProfileFile });
             }
           });
-          console.log("Perticlular user artist", perticularUserArtist);
           return perticularUserArtist;
         }
         return new Error("User not found");
@@ -45,7 +44,6 @@ module.exports = {
             createReadStream,
             filename
           );
-          console.log("ArtistURL", singerProfileFileOnS3.fileLocationOnS3);
 
           const artist = await Artist.create({
             name,
