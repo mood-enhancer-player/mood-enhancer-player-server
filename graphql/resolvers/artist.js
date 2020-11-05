@@ -13,7 +13,7 @@ module.exports = {
         if (user) {
           const allArtists = await Artist.find({});
           allArtists.forEach(({ _id, name, singerProfileFile }) => {
-            if (!user.singers.includes(name)) {
+            if (user.singers.includes(name)) {
               perticularUserArtist.push({ _id, name, singerProfileFile });
             }
           });
