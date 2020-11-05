@@ -12,10 +12,11 @@ module.exports = {
         if (user) {
           const allSongs = await Song.find({});
           allSongs.forEach((song) => {
-            if (!user.albums.includes(song.album)) {
+            if (user.albums.includes(song.album)) {
               perticularUserAlbums.push(song);
             }
           });
+          console.log("album", perticularUserAlbums);
           return perticularUserAlbums;
         }
         return new Error("User not found");
