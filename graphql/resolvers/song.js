@@ -12,7 +12,10 @@ const checkAuth = require("../../common/utils/checkAuth");
 
 const User = require("../../models/User");
 const Song = require("../../models/Song");
-const uploadToS3 = require("../../common/awsSetup/s3FileUpload");
+const {
+  uploadToS3,
+  deleteToS3,
+} = require("../../common/awsSetup/s3FileUpload");
 // const s3 = require("./aws/s3");
 
 module.exports = {
@@ -129,7 +132,7 @@ module.exports = {
 
           const songFileOnS3 = await uploadToS3(
             createReadStreamForSong,
-            songFilename
+            songFilename.replace(/ /g, "")
           );
           console.log("songURL", songFileOnS3.fileLocationOnS3);
 
@@ -142,7 +145,7 @@ module.exports = {
 
           const coverFileOnS3 = await uploadToS3(
             createReadStreamForCover,
-            coverFilename
+            coverFilename.replace(/ /g, "")
           );
           console.log("coverURL", coverFileOnS3.fileLocationOnS3);
 
@@ -235,13 +238,42 @@ module.exports = {
       // } catch (err) {
       //   throw new Error(err);
       // }
+      // 1. Validate file metadata.
+
+      // 2. Stream file contents into cloud storage:
+      // https://nodejs.org/api/stream.html
+
+      // 3. Record the file upload in your DB.
+      // const id = await recordFile( … )
     },
-    // 1. Validate file metadata.
 
-    // 2. Stream file contents into cloud storage:
-    // https://nodejs.org/api/stream.html
+    deleteSong: async (_, { songId }, context) => {
+      console.log(songId);
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const song = await Song.findById(songId);
+          if (song) {
+            const splitedCoverURL = song.cover.split("/");
+            const coverURL = splitedCoverURL[splitedCoverURL.length - 1];
 
-    // 3. Record the file upload in your DB.
-    // const id = await recordFile( … )
+            const splitedMusicSrcURL = song.musicSrc.split("/");
+            const musicSrcURL =
+              splitedMusicSrcURL[splitedMusicSrcURL.length - 1];
+            console.log(coverURL);
+            console.log(musicSrcURL);
+            await deleteToS3(coverURL);
+            await deleteToS3(musicSrcURL);
+            await Song.findByIdAndDelete(songId);
+          } else {
+            throw new Error("Song not Found");
+          }
+        }
+        return "Song Deleted";
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 };

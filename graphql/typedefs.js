@@ -124,6 +124,7 @@ module.exports = gql`
       album: String
       singer: String
     ): File!
+    deleteSong(songId: ID!): String!
     addArtist(name: String!, singerProfileFile: Upload!): File!
   }
 
