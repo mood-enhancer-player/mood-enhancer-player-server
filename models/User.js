@@ -47,6 +47,11 @@ const userSchema = new Schema(
         trim: true,
       },
     ],
+    status: {
+      type: String,
+      required: true,
+      default: "active",
+    },
   },
   {
     timestamps: true,

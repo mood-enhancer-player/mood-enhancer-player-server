@@ -16,6 +16,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
+        checkLoginOrNot();
         if (user) {
           return user;
         }
@@ -54,13 +55,16 @@ module.exports = {
         errors.general = "Wrong credentials";
         throw new UserInputError("Wrong credentials", { errors });
       }
-
-      const token = generateToken(user);
-      return {
-        ...user._doc,
-        id: user._id,
-        token,
-      };
+      if (user.status === "active") {
+        const token = generateToken(user);
+        return {
+          ...user._doc,
+          id: user._id,
+          token,
+        };
+      } else {
+        throw new Error("You are Blocked");
+      }
     },
 
     async register(_, args, contex, info) {
@@ -108,6 +112,23 @@ module.exports = {
         id: user._id,
         token,
       };
+    },
+    async activeOrBlock(_, args, context) {
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        console.log(user);
+        if (user) {
+          user.status === "active"
+            ? (user.status = "block")
+            : (user.status = "active");
+          await user.save();
+          return user.status;
+        }
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
     },
   },
 };
