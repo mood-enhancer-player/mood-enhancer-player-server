@@ -7,6 +7,7 @@ const songResolvers = require("./song");
 const artistResolvers = require("./artist");
 const albumResolvers = require("./album");
 const searchResolver = require("./search");
+const processImageResolver = require("./processImage");
 
 module.exports = {
   // Post: {
@@ -29,6 +30,7 @@ module.exports = {
     ...playlistResolvers.Mutation,
     ...songResolvers.Mutation,
     ...artistResolvers.Mutation,
+    ...processImageResolver.Mutation,
     // ...postsResolvers.Mutation,
     // ...commentsResolvers.Mutation,
     // ...likesResolvers.Mutation,

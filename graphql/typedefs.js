@@ -127,6 +127,7 @@ module.exports = gql`
     deleteSong(songId: ID!): String!
     addArtist(name: String!, singerProfileFile: Upload!): File!
     activeOrBlock: String!
+    processImage(base64Image: String!): String!
   }
 
   # type Subscription {

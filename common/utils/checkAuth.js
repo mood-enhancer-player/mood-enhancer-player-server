@@ -17,5 +17,6 @@ module.exports = (context) => {
     }
     throw new Error("Authentication token must be 'Bearer [token]");
   }
-  throw new Error("Authorization header must be provided");
+  // throw new Error("Authorization header must be provided");
+  throw new Error("Please Login Or SignUp First");
 };
