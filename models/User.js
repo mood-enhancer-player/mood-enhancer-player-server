@@ -15,6 +15,11 @@ const userSchema = new Schema(
       required: true,
       trim: true,
     },
+    profileSrc: {
+      type: String,
+      required: true,
+      default: "https://www.w3schools.com/howto/img_avatar.png",
+    },
     password: {
       type: String,
       required: true,

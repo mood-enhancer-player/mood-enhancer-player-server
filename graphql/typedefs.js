@@ -128,6 +128,7 @@ module.exports = gql`
     addArtist(name: String!, singerProfileFile: Upload!): File!
     activeOrBlock: String!
     processImage(base64Image: String!): String!
+    uploadProfile(profileImgFile: Upload!): File!
   }
 
   # type Subscription {

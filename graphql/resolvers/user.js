@@ -9,6 +9,10 @@ const {
 } = require("../../common/utils/validators");
 const generateToken = require("../../common/utils/jwtGenerator");
 const User = require("../../models/User");
+const {
+  uploadToS3,
+  deleteToS3,
+} = require("../../common/awsSetup/s3FileUpload");
 
 module.exports = {
   Query: {
@@ -117,13 +121,40 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
-        console.log(user);
         if (user) {
           user.status === "active"
             ? (user.status = "block")
             : (user.status = "active");
           await user.save();
           return user.status;
+        }
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async uploadProfile(_, { profileImgFile }, context) {
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const {
+            createReadStream,
+            filename,
+            mimetype,
+            encoding,
+          } = await profileImgFile;
+
+          const profileImgFileOnS3 = await uploadToS3(
+            createReadStream,
+            filename.replace(/ /g, "")
+          );
+          user.profileSrc = await profileImgFileOnS3.fileLocationOnS3;
+          await user.save();
+
+          return {
+            url: profileImgFileOnS3.fileLocationOnS3,
+          };
         }
         return new Error("User not found");
       } catch (err) {
