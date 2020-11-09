@@ -30,6 +30,7 @@ module.exports = gql`
     email: String!
     token: String!
     username: String!
+    profileSrc: String!
     createdAt: String!
   }
 

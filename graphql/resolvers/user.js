@@ -20,7 +20,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
-        checkLoginOrNot();
+        // checkLoginOrNot();
         if (user) {
           return user;
         }
