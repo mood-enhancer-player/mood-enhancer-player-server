@@ -1,7 +1,7 @@
 const checkAuth = require("../../common/utils/checkAuth");
 const Artist = require("../../models/Artist");
 const User = require("../../models/User");
-const uploadToS3 = require("../../common/awsSetup/s3FileUpload");
+const { uploadToS3 } = require("../../common/awsSetup/s3FileUpload");
 
 module.exports = {
   Query: {
