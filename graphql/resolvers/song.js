@@ -113,7 +113,6 @@ module.exports = {
       }
     },
     async getArtistById(_, { artistId }, context) {
-      console.log(artistId);
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
@@ -121,7 +120,27 @@ module.exports = {
           const artist = await Artist.findById(artistId);
           return artist;
         }
-        return new Error("Songs not found");
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getSongsByArtist(_, { artistId }, context) {
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const artist = await Artist.findById(artistId);
+          const songs = await Song.find({});
+          const perticularArtistSongs = [];
+          songs.forEach((song) => {
+            if (song.singer.includes(artist.name)) {
+              perticularArtistSongs.push(song);
+            }
+          });
+          return perticularArtistSongs;
+        }
+        return new Error("User not found");
       } catch (err) {
         throw new Error(err);
       }
@@ -263,7 +282,6 @@ module.exports = {
     },
 
     deleteSong: async (_, { songId }, context) => {
-      console.log(songId);
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);

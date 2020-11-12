@@ -103,6 +103,8 @@ module.exports = gql`
     getMostPopular: [Song!]!
     searchSong(songName: String, singerName: String): [Song]!
     getArtistById(artistId: ID!): Artist!
+    # getSongsByArtist(artistId: ID!): String!
+    getSongsByArtist(artistId: ID!): [Song]!
     # uploads: [File]
   }
 
