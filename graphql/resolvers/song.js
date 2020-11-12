@@ -12,6 +12,7 @@ const checkAuth = require("../../common/utils/checkAuth");
 
 const User = require("../../models/User");
 const Song = require("../../models/Song");
+const Artist = require("../../models/Artist");
 const {
   uploadToS3,
   deleteToS3,
@@ -105,6 +106,20 @@ module.exports = {
         if (user) {
           const allSongs = await Song.find({});
           return allSongs;
+        }
+        return new Error("Songs not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async getArtistById(_, { artistId }, context) {
+      console.log(artistId);
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const artist = await Artist.findById(artistId);
+          return artist;
         }
         return new Error("Songs not found");
       } catch (err) {
