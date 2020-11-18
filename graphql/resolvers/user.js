@@ -160,5 +160,35 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async updateUserInfo(_, args, context) {
+      const { username, email } = args.updateUserInput;
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const userNameExist = await User.find({ username });
+          if (userNameExist.length) {
+            throw new UserInputError(
+              "Username Already exist ! please choose another username"
+            );
+          }
+          const emailExist = await User.find({ email });
+          if (emailExist.length) {
+            throw new UserInputError(
+              "Email Already exist ! please choose another username"
+            );
+          }
+
+          // Username and email is uniqe so update it
+          user.username = username;
+          user.email = email;
+          await user.save();
+          return "Your Information updated succesfully";
+        }
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
 };

@@ -83,6 +83,11 @@ module.exports = gql`
     singerProfileFile: String!
   }
 
+  input UpdateUserInput {
+    username: String!
+    email: String!
+  }
+
   # input SearchInput {
   #   songName: String!
   #   singerName: String!
@@ -133,6 +138,7 @@ module.exports = gql`
     activeOrBlock: String!
     processImage(base64Image: String!): String!
     uploadProfile(profileImgFile: Upload!): File!
+    updateUserInfo(updateUserInput: UpdateUserInput): String!
   }
 
   # type Subscription {
