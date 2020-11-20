@@ -194,10 +194,10 @@ module.exports = {
     },
     async resetPassword(_, { email }, context) {
       try {
-        const { id } = checkAuth(context);
-        const user = await User.findById(id);
+        // const { id } = checkAuth(context);
+        // const user = await User.findById(id);
+        const user = await User.findOne({ email });
         if (user) {
-          const user = await User.findOne({ email });
           if (!user) {
             throw new UserInputError("Account not found !!");
           } else {
