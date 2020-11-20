@@ -5,12 +5,35 @@ const mailSender = async (userEmail, randomPassword) => {
   console.log("randomPassword", randomPassword);
 
   const mailHTML = `
-<h1>Mood Enhancer</h1>
-<div
-  style="width: 200px; height: 150px; background-color: black; color: white"
->
-  You new Password is <b> ${randomPassword}</b>
-</div>
+  <body style="background-color: black">
+  <div style="margin-left: auto; margin-right: auto; width: 60rem">
+    <h1 style="color: #ffe369; text-align: center; font-size: 50px">
+      Mood Enhancer
+    </h1>
+    <div>
+      <h1 style="text-align: center; color: white; margin-bottom: 2rem">
+        😔>>>😆
+      </h1>
+    </div>
+    <div style="width: auto; height: auto; background-color: #90caf9">
+      <div
+        style="
+          width: auto;
+          height: 120px;
+          text-align: center;
+          margin: 20px;
+          padding: 30px;
+        "
+      >
+        <h1>Hi Shubham Khunt,</h1>
+        <h1>
+          <em>Your New Mood Enhancer Password is :-</em>
+          <b> ${randomPassword}</b>
+        </h1>
+      </div>
+    </div>
+  </div>
+</body>
 `;
 
   //Step 1
