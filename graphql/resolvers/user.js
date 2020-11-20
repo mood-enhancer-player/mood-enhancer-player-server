@@ -13,6 +13,7 @@ const {
   uploadToS3,
   deleteToS3,
 } = require("../../common/awsSetup/s3FileUpload");
+const { mailSender } = require("../../common/mailSetup/nodemailer");
 
 module.exports = {
   Query: {
@@ -184,6 +185,26 @@ module.exports = {
           user.email = email;
           await user.save();
           return "Your Information updated succesfully";
+        }
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
+    async resetPassword(_, { email }, context) {
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const user = await User.findOne({ email });
+          if (!user) {
+            throw new UserInputError("Account not found !!");
+          } else {
+            // sendNewPassword()
+            // const d =  mailSender(email);
+            mailSender(email);
+          }
+          return email;
         }
         return new Error("User not found");
       } catch (err) {
