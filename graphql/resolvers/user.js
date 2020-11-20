@@ -200,9 +200,7 @@ module.exports = {
           if (!user) {
             throw new UserInputError("Account not found !!");
           } else {
-            // sendNewPassword()
-            // const d =  mailSender(email);
-            mailSender(email);
+            const res = await mailSender(email);
           }
           return email;
         }
