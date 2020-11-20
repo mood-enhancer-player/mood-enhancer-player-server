@@ -1,16 +1,18 @@
 const nodemailer = require("nodemailer");
 
-const mailHTML = `
+const mailSender = async (userEmail, randomPassword) => {
+  console.log("userEmail", userEmail);
+  console.log("randomPassword", randomPassword);
+
+  const mailHTML = `
 <h1>Mood Enhancer</h1>
 <div
   style="width: 200px; height: 150px; background-color: black; color: white"
 >
-  You new Password is <b> ejdbefw</b>
+  You new Password is <b> ${randomPassword}</b>
 </div>
 `;
 
-const mailSender = async (userEmail) => {
-  console.log("userEmail", userEmail);
   //Step 1
   let transporter = nodemailer.createTransport({
     service: "gmail",
@@ -36,17 +38,6 @@ const mailSender = async (userEmail) => {
     //   },
     // ],
   };
-  // Step 3
-  //   const info = await transporter.sendMail(mailOptions, (err, data) => {
-  //     if (err) {
-  //       //   console.log("Error ", err);
-  //       return err;
-  //     } else {
-  //       //   console.log("Send Email !!", data);
-  //       return data;
-  //     }
-  //   });
-
   const info = await transporter.sendMail(mailOptions);
   return info;
 };

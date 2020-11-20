@@ -1,5 +1,6 @@
 const bcrypt = require("bcryptjs");
 const { UserInputError } = require("apollo-server");
+const { nanoid } = require("nanoid");
 
 const checkAuth = require("../../common/utils/checkAuth");
 
@@ -200,9 +201,16 @@ module.exports = {
           if (!user) {
             throw new UserInputError("Account not found !!");
           } else {
-            const res = await mailSender(email);
+            // Generate 8 digit password
+            const randomPassword = nanoid(8);
+            // Send password mail
+            await mailSender(email, randomPassword);
+            const userNewPassword = await bcrypt.hash(randomPassword, 12);
+            // update user password
+            user.password = userNewPassword;
+            await user.save();
+            return "New password is send to your mail id";
           }
-          return email;
         }
         return new Error("User not found");
       } catch (err) {
