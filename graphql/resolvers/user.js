@@ -80,7 +80,6 @@ module.exports = {
         throw new UserInputError("Error", { errors });
       }
       const user = await User.findOne({ email });
-      console.log(user);
 
       if (user.admin) {
         if (!user) {

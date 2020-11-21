@@ -14,7 +14,6 @@ const Song = require("../../models/Song");
 module.exports = {
   Query: {
     async searchSong(_, { songName, singerName }, context) {
-      console.log(songName, singerName);
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);

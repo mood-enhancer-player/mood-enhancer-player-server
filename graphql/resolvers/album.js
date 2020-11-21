@@ -16,8 +16,22 @@ module.exports = {
               perticularUserAlbums.push(song);
             }
           });
-          console.log("album", perticularUserAlbums);
-          return perticularUserAlbums;
+          function removeDuplicateAlbumFromArray(array, key) {
+            let check = {};
+            let res = [];
+            for (let i = 0; i < array.length; i++) {
+              if (!check[array[i][key]]) {
+                check[array[i][key]] = true;
+                res.push(array[i]);
+              }
+            }
+            return res;
+          }
+          const albums = removeDuplicateAlbumFromArray(
+            perticularUserAlbums,
+            "album"
+          );
+          return albums;
         }
         return new Error("User not found");
       } catch (err) {
