@@ -57,10 +57,10 @@ const userSchema = new Schema(
       required: true,
       default: "active",
     },
-    // admin: {
-    //   type: Boolean,
-    //   default: false,
-    // },
+    admin: {
+      type: Boolean,
+      default: false,
+    },
   },
   {
     timestamps: true,

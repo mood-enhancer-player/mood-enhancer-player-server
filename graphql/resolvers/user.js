@@ -73,6 +73,42 @@ module.exports = {
         throw new Error("You are Blocked");
       }
     },
+    // Login for admin user
+    async adminLogin(_, { email, password }) {
+      const { errors, valid } = validateLoginInput(email, password);
+      if (!valid) {
+        throw new UserInputError("Error", { errors });
+      }
+      const user = await User.findOne({ email });
+      console.log(user);
+
+      if (user.admin) {
+        if (!user) {
+          errors.general = "User not found";
+          throw new UserInputError("User not found", { errors });
+        }
+
+        const match = await bcrypt.compare(password, user.password);
+        if (!match) {
+          errors.general = "Wrong credentials";
+          throw new UserInputError("Wrong credentials", { errors });
+        }
+        if (user.status === "active") {
+          const token = generateToken(user);
+          return {
+            ...user._doc,
+            id: user._id,
+            token,
+          };
+        } else {
+          throw new Error("You are Blocked");
+        }
+      } else {
+        throw new UserInputError(
+          "You are not authorize to perform this operation"
+        );
+      }
+    },
 
     async register(_, args, contex, info) {
       let { username, email, password, confirmPassword } = args.registerInput;
