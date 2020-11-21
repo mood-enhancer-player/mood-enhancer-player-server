@@ -2,6 +2,7 @@ const checkAuth = require("../../common/utils/checkAuth");
 const Artist = require("../../models/Artist");
 const User = require("../../models/User");
 const { uploadToS3 } = require("../../common/awsSetup/s3FileUpload");
+const { checkAdmin } = require("../../common/utils/checkAdmin");
 
 module.exports = {
   Query: {
@@ -31,6 +32,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
+        await checkAdmin(context);
         if (user) {
           // convert into capitalize form
           name = name.trim().replace(/\b\w/g, (c) => c.toUpperCase());

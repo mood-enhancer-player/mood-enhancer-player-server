@@ -160,6 +160,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
+        await checkAdmin(context);
         if (user) {
           user.status === "active"
             ? (user.status = "block")

@@ -17,7 +17,8 @@ const {
   uploadToS3,
   deleteToS3,
 } = require("../../common/awsSetup/s3FileUpload");
-const checkAdmin = require("../../common/utils/checkAdmin");
+const { checkAdmin } = require("../../common/utils/checkAdmin");
+
 // const s3 = require("./aws/s3");
 
 module.exports = {
@@ -157,6 +158,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
+        await checkAdmin(context);
         // checkAdmin();
         if (user) {
           const {
@@ -287,6 +289,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
+        await checkAdmin(context);
         if (user) {
           const song = await Song.findById(songId);
           if (song) {
