@@ -15,6 +15,7 @@ const {
   deleteToS3,
 } = require("../../common/awsSetup/s3FileUpload");
 const { mailSender } = require("../../common/mailSetup/nodemailer");
+const { checkAdmin } = require("../../common/utils/checkAdmin");
 
 module.exports = {
   Query: {
@@ -33,6 +34,7 @@ module.exports = {
     async getAllUsers(_, __, context) {
       try {
         const { id } = checkAuth(context);
+        await checkAdmin(context);
         const users = await User.find({});
         if (users) {
           return users;

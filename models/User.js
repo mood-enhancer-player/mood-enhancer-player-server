@@ -57,6 +57,10 @@ const userSchema = new Schema(
       required: true,
       default: "active",
     },
+    // admin: {
+    //   type: Boolean,
+    //   default: false,
+    // },
   },
   {
     timestamps: true,

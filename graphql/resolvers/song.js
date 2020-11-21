@@ -17,6 +17,7 @@ const {
   uploadToS3,
   deleteToS3,
 } = require("../../common/awsSetup/s3FileUpload");
+const checkAdmin = require("../../common/utils/checkAdmin");
 // const s3 = require("./aws/s3");
 
 module.exports = {
@@ -156,6 +157,7 @@ module.exports = {
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
+        // checkAdmin();
         if (user) {
           const {
             createReadStream: createReadStreamForSong,

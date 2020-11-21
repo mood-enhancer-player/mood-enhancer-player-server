@@ -12,7 +12,7 @@ const mailSender = async (userEmail, randomPassword) => {
     </h1>
     <div>
       <h1 style="text-align: center; color: white; margin-bottom: 2rem">
-        😔>>>😆
+        😔 >>> 😆
       </h1>
     </div>
     <div style="width: auto; height: auto; background-color: #90caf9">
