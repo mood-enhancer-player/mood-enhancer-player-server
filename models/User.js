@@ -31,7 +31,7 @@ const userSchema = new Schema(
         require: true,
       },
     ],
-    playList: [
+    likeSongs: [
       {
         type: Schema.Types.ObjectId,
         ref: "Song",

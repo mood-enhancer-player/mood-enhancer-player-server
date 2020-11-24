@@ -2,7 +2,7 @@
 const usersResolvers = require("./user");
 // const commentsResolvers = require("./comments");
 // const likesResolvers = require("./likes");
-const playlistResolvers = require("./playlist");
+const likeSongsResolvers = require("./likeSongs");
 const songResolvers = require("./song");
 const artistResolvers = require("./artist");
 const albumResolvers = require("./album");
@@ -21,7 +21,7 @@ module.exports = {
   Query: {
     // ...postsResolvers.Query,
     ...usersResolvers.Query,
-    ...playlistResolvers.Query,
+    ...likeSongsResolvers.Query,
     ...songResolvers.Query,
     ...artistResolvers.Query,
     ...albumResolvers.Query,
@@ -30,7 +30,7 @@ module.exports = {
 
   Mutation: {
     ...usersResolvers.Mutation,
-    ...playlistResolvers.Mutation,
+    ...likeSongsResolvers.Mutation,
     ...songResolvers.Mutation,
     ...artistResolvers.Mutation,
     ...processImageResolver.Mutation,

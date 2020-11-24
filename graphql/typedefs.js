@@ -100,7 +100,7 @@ module.exports = gql`
     getPost(postId: ID!): Post
 
     getSongById(songId: ID!): Song!
-    getPlayList: [Song]!
+    getLikeSongs: [Song]!
     getRecentPlay: [Song!]!
     getAllSongs: [Song!]!
     getArtists: [Artist]!
@@ -124,7 +124,7 @@ module.exports = gql`
     deleteComment(postId: ID!, commentId: ID!): Post!
     likePost(postId: ID!): Post!
 
-    addToPlayList(songId: ID!): String!
+    addToLikeSongs(songId: ID!): String!
     # uploadSong(songData: SongInput!): Song!
     # uploadSong(file: Upload!, songInput: SongInput): File!
     uploadSong(
