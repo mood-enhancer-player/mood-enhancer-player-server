@@ -138,8 +138,10 @@ module.exports = gql`
     deleteSong(songId: ID!): String!
     addArtist(name: String!, singerProfileFile: Upload!): File!
     activeOrBlock: String!
-    processImage(base64Image: String!): String!
+    processImage(base64Image: Upload!): File!
     uploadProfile(profileImgFile: Upload!): File!
+    uploadUserMoodImg(userMoodImgFile: Upload!): File!
+    uploadModelInput(base64Image: Upload!): File!
     updateUserInfo(updateUserInput: UpdateUserInput): String!
   }
 

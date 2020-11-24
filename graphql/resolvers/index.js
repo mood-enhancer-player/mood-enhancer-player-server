@@ -8,6 +8,9 @@ const artistResolvers = require("./artist");
 const albumResolvers = require("./album");
 const searchResolver = require("./search");
 const processImageResolver = require("./processImage");
+const moodResolver = require("./mood");
+const modelInputResolver = require("./modelInput");
+const mood = require("./mood");
 
 module.exports = {
   // Post: {
@@ -31,6 +34,8 @@ module.exports = {
     ...songResolvers.Mutation,
     ...artistResolvers.Mutation,
     ...processImageResolver.Mutation,
+    ...moodResolver.Mutation,
+    ...modelInputResolver.Mutation,
     // ...postsResolvers.Mutation,
     // ...commentsResolvers.Mutation,
     // ...likesResolvers.Mutation,
