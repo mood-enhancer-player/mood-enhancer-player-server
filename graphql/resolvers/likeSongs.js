@@ -6,7 +6,6 @@ module.exports = {
   Query: {
     async getLikeSongs(_, __, context) {
       try {
-        const perticularUserLikeSongsList = [];
         const { id } = checkAuth(context);
         const user = await User.findById(id).populate("likeSongs");
         if (user) {
