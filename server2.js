@@ -15,14 +15,10 @@ const server = new ApolloServer({
 });
 
 const app = express();
-var corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true, // <-- REQUIRED backend setting
-};
+server.applyMiddleware({ app });
 
 app.use(express.static("public"));
-app.use(cors(corsOptions));
-server.applyMiddleware({ app, cors: false });
+app.use(cors());
 
 mongoose
   .connect(MONGODB, {
