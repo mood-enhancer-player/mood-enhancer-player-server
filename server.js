@@ -31,6 +31,6 @@ mongoose
     console.log("Mongodb connected");
   });
 
-app.listen({ port: 9090 }, () => {
-  console.log(`🚀 Server ready at http://localhost:9090`);
+app.listen({ port: process.env.HOST_PORT }, () => {
+  console.log(`🚀 Server ready at ${process.env.HOST_URL}`);
 });

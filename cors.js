@@ -1,4 +1,4 @@
-const whitelist = ["http://localhost:3000", "http://localhost:3008"];
+const whitelist = [process.env.CLIENT_URL, process.env.ADMIN_URL];
 var corsOptionsDelegate = (req, callback) => {
   var corsOptions;
   console.log(req.header("Origin"));
