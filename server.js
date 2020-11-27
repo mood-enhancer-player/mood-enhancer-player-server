@@ -7,6 +7,7 @@ const mongoose = require("mongoose");
 const typeDefs = require("./graphql/typedefs");
 const resolvers = require("./graphql/resolvers");
 const { MONGODB } = require("./config");
+const { corsWithOptions } = require("./cors");
 
 const server = new ApolloServer({
   typeDefs,
@@ -15,13 +16,9 @@ const server = new ApolloServer({
 });
 
 const app = express();
-var corsOptions = {
-  origin: "http://localhost:3000",
-  credentials: true, // <-- REQUIRED backend setting
-};
 
 app.use(express.static("public"));
-app.use(cors(corsOptions));
+app.use(cors(corsWithOptions));
 server.applyMiddleware({ app, cors: false });
 
 mongoose
