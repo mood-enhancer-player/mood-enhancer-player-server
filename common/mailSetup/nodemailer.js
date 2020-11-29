@@ -1,6 +1,6 @@
 const nodemailer = require("nodemailer");
 
-const mailSender = async (userEmail, randomPassword) => {
+const mailSender = async (userEmail, randomPassword, username) => {
   console.log("userEmail", userEmail);
   console.log("randomPassword", randomPassword);
 
@@ -25,7 +25,7 @@ const mailSender = async (userEmail, randomPassword) => {
           padding: 30px;
         "
       >
-        <h1>Hi Shubham Khunt,</h1>
+        <h1>${username},</h1>
         <h1>
           <em>Your New Mood Enhancer Password is :-</em>
           <b> ${randomPassword}</b>
@@ -49,8 +49,8 @@ const mailSender = async (userEmail, randomPassword) => {
   let mailOptions = {
     from: process.env.EMAIL,
     to: userEmail,
-    subject: "Hello World",
-    text: "Hello World",
+    subject: "Reset Password",
+    text: "Reset Password",
     html: mailHTML,
     // attachments: [
     //   {

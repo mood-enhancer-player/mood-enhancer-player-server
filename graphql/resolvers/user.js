@@ -242,7 +242,7 @@ module.exports = {
             // Generate 8 digit password
             const randomPassword = nanoid(8);
             // Send password mail
-            await mailSender(email, randomPassword);
+            await mailSender(email, randomPassword, user.username);
             const userNewPassword = await bcrypt.hash(randomPassword, 12);
             // update user password
             user.password = userNewPassword;
