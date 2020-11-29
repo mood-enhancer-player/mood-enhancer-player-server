@@ -110,6 +110,7 @@ module.exports = gql`
     getArtistById(artistId: ID!): Artist!
     # getSongsByArtist(artistId: ID!): String!
     getSongsByArtist(artistId: ID!): [Song]!
+    getPlayList: [Song]!
     # uploads: [File]
   }
 

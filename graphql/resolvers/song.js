@@ -147,6 +147,19 @@ module.exports = {
         throw new Error(err);
       }
     },
+    async getPlayList(_, __, context) {
+      try {
+        const { id } = checkAuth(context);
+        const user = await User.findById(id);
+        if (user) {
+          const songs = await Song.find({}).limit(5);
+          return songs;
+        }
+        return new Error("User not found");
+      } catch (err) {
+        throw new Error(err);
+      }
+    },
   },
   Mutation: {
     uploadSong: async (
