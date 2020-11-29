@@ -28,7 +28,6 @@ module.exports = {
   },
   Mutation: {
     async addArtist(_, { name, singerProfileFile }, context) {
-      console.log(name, singerProfileFile);
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);

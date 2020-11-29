@@ -18,6 +18,7 @@ const {
   deleteToS3,
 } = require("../../common/awsSetup/s3FileUpload");
 const { checkAdmin } = require("../../common/utils/checkAdmin");
+const { default: Axios } = require("axios");
 
 // const s3 = require("./aws/s3");
 
@@ -199,6 +200,11 @@ module.exports = {
             coverFilename.replace(/ /g, "")
           );
           console.log("coverURL", coverFileOnS3.fileLocationOnS3);
+          const {
+            data: { moodType },
+          } = await Axios.get(
+            `${process.env.MODEL_APT_URL}?url=${songFileOnS3.fileLocationOnS3}`
+          );
 
           const songObject = {
             name,
@@ -208,6 +214,7 @@ module.exports = {
             musicSrc: songFileOnS3.fileLocationOnS3,
             cover: coverFileOnS3.fileLocationOnS3,
             playCount: 0,
+            moodType,
             userId: id,
           };
 

@@ -37,6 +37,11 @@ const songSchema = new Schema(
       required: true,
       trim: true,
     },
+    moodType: {
+      type: String,
+      required: true,
+      trim: true,
+    },
     userId: {
       type: Schema.Types.ObjectId,
       ref: "User",

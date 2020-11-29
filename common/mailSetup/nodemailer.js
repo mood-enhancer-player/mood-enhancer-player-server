@@ -1,8 +1,8 @@
 const nodemailer = require("nodemailer");
 
 const mailSender = async (userEmail, randomPassword, username) => {
-  console.log("userEmail", userEmail);
-  console.log("randomPassword", randomPassword);
+  // console.log("userEmail", userEmail);
+  // console.log("randomPassword", randomPassword);
 
   const mailHTML = `
   <body style="background-color: black">

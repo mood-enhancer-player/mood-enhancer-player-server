@@ -73,6 +73,7 @@ module.exports = gql`
     musicSrc: String!
     cover: String!
     playCount: Int!
+    moodType: String!
     createdAt: String!
     updatedAt: String!
   }
