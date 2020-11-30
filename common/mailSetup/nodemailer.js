@@ -1,9 +1,6 @@
 const nodemailer = require("nodemailer");
 
 const mailSender = async (userEmail, randomPassword, username) => {
-  // console.log("userEmail", userEmail);
-  // console.log("randomPassword", randomPassword);
-
   const mailHTML = `
   <body style="background-color: black">
   <div style="margin-left: auto; margin-right: auto; width: 60rem">
@@ -52,14 +49,6 @@ const mailSender = async (userEmail, randomPassword, username) => {
     subject: "Reset Password",
     text: "Reset Password",
     html: mailHTML,
-    // attachments: [
-    //   {
-    //     filename: "mailtrap.png",
-    //     path:
-    //       "https://external-content.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.e7cg2xzIv-MLiN4KGq2SJAFNC7%26pid%3DApi&f=1",
-    //     cid: "uniq-mailtrap.png",
-    //   },
-    // ],
   };
   const info = await transporter.sendMail(mailOptions);
   return info;

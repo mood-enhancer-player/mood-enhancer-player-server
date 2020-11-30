@@ -3,11 +3,6 @@ const { UserInputError } = require("apollo-server");
 
 const checkAuth = require("../../common/utils/checkAuth");
 
-const {
-  validateRegisterInput,
-  validateLoginInput,
-} = require("../../common/utils/validators");
-const generateToken = require("../../common/utils/jwtGenerator");
 const User = require("../../models/User");
 const Song = require("../../models/Song");
 
@@ -43,43 +38,6 @@ module.exports = {
               return matchSongs.length ? matchSongs : matchSingers;
             }
           }
-          //   if (singerName) {
-          //     singerNameUppercase = singerName
-          //       .trim()
-          //       .replace(/\b\w/g, (c) => c.toUpperCase());
-
-          //     const matchSingers = await Song.find({
-          //       singer: singerNameUppercase,
-          //     });
-          //     console.log(matchSingers);
-          //     return matchSingers;
-          //   }
-          //   let songNameUppercase, singerNameUppercase, where;
-          //   if (songName) {
-          //     songNameUppercase = songName
-          //       .trim()
-          //       .replace(/\b\w/g, (c) => c.toUpperCase());
-          //     where = {
-          //       name: songNameUppercase,
-          //     };
-          //   }
-          //   if (singerName) {
-          //     singerNameUppercase = singerName
-          //       .trim()
-          //       .replace(/\b\w/g, (c) => c.toUpperCase());
-          //     where = {
-          //       singer: singerNameUppercase,
-          //     };
-          //   }
-          //   console.log(where);
-          //   const searchResult = await Song.find(where);
-          //   if (searchResult.length != 0) {
-          //     console.log(searchResult);
-          //     return searchResult;
-          //   }
-          //   return new UserInputError(
-          //     "Song not found.Please search again with another keyword(songname or singer name)"
-          //   );
         }
         return new Error("User not found");
       } catch (err) {

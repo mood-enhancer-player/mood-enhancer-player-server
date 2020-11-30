@@ -1,21 +1,9 @@
-const bcrypt = require("bcryptjs");
-const { UserInputError } = require("apollo-server");
-const { nanoid } = require("nanoid");
-
 const checkAuth = require("../../common/utils/checkAuth");
-
-const {
-  validateRegisterInput,
-  validateLoginInput,
-} = require("../../common/utils/validators");
-const generateToken = require("../../common/utils/jwtGenerator");
 const User = require("../../models/User");
 const {
   uploadToS3,
   deleteToS3,
 } = require("../../common/awsSetup/s3FileUpload");
-const { mailSender } = require("../../common/mailSetup/nodemailer");
-const { checkAdmin } = require("../../common/utils/checkAdmin");
 
 module.exports = {
   Mutation: {

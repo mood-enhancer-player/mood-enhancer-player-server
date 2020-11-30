@@ -41,25 +41,6 @@ module.exports = gql`
     email: String!
   }
 
-  # input SongInput {
-  #   title: String!
-  #   description: String!
-  #   artist: String!
-  #   # songDuration: String!
-  #   album: String!
-  #   # songFile: String!
-  # }
-
-  # type Playlist {
-  #   title: String!
-  #   album: String!
-  #   songSize: String!
-  # }
-
-  # type File {
-  #   filename: String!
-  # }
-
   type File {
     url: String!
   }
@@ -89,11 +70,6 @@ module.exports = gql`
     email: String!
   }
 
-  # input SearchInput {
-  #   songName: String!
-  #   singerName: String!
-  # }
-
   type Query {
     me: User
     getAllUsers: [User]!
@@ -109,10 +85,8 @@ module.exports = gql`
     getMostPopular: [Song!]!
     searchSong(songName: String, singerName: String): [Song]!
     getArtistById(artistId: ID!): Artist!
-    # getSongsByArtist(artistId: ID!): String!
     getSongsByArtist(artistId: ID!): [Song]!
     getPlayList: [Song]!
-    # uploads: [File]
   }
 
   type Mutation {
@@ -127,8 +101,6 @@ module.exports = gql`
     likePost(postId: ID!): Post!
 
     addToLikeSongs(songId: ID!): String!
-    # uploadSong(songData: SongInput!): Song!
-    # uploadSong(file: Upload!, songInput: SongInput): File!
     uploadSong(
       songFile: Upload!
       coverFile: Upload!
@@ -146,8 +118,4 @@ module.exports = gql`
     uploadModelInput(base64Image: Upload!): File!
     updateUserInfo(updateUserInput: UpdateUserInput): String!
   }
-
-  # type Subscription {
-  #   newPost: Post!
-  # }
 `;

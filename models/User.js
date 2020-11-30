@@ -1,5 +1,4 @@
 const { model, Schema } = require("mongoose");
-const { songSchema } = require("./Song");
 
 const userSchema = new Schema(
   {

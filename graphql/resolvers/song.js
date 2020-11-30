@@ -1,10 +1,5 @@
-// const path = require("path");
-const { extname, resolve } = require("path");
 const fs = require("fs");
 const AWS = require("aws-sdk");
-
-// const uuid = require("uuid");
-const { v4: uuid } = require("uuid");
 
 const { UserInputError } = require("apollo-server");
 
@@ -19,8 +14,6 @@ const {
 } = require("../../common/awsSetup/s3FileUpload");
 const { checkAdmin } = require("../../common/utils/checkAdmin");
 const { default: Axios } = require("axios");
-
-// const s3 = require("./aws/s3");
 
 module.exports = {
   Query: {
@@ -51,21 +44,6 @@ module.exports = {
               await user.recentPlay.unshift(songId);
               await user.save();
             }
-            // // send 3 songs list
-            // const allSongs = await Song.find();
-            // const index = allSongs.findIndex((oneSong, index) => {
-            //   if (String(oneSong._id) == songId) {
-            //     return index;
-            //   }
-            // });
-            // const audioList = [];
-            // audioList.push(
-            //   allSongs[(index - 1 + allSongs.length) % allSongs.length]
-            // ); // First
-            // audioList.push(allSongs[index]); // Middle
-            // audioList.push(allSongs[(index + 1) % allSongs.length]); // Last
-            // console.log(audioList);
-            // return audioList;
             return song;
           } else {
             throw new UserInputError("Song not found");
@@ -173,7 +151,6 @@ module.exports = {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
         await checkAdmin(context);
-        // checkAdmin();
         if (user) {
           const {
             createReadStream: createReadStreamForSong,
