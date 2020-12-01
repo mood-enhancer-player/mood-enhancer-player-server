@@ -23,8 +23,8 @@ module.exports = {
             createReadStream,
             filename.replace(/ /g, "")
           );
-          //   user.profileSrc = await userMoodImgFileOnS3.fileLocationOnS3;
-          //   await user.save();
+          user.faceSrc = await userMoodImgFileOnS3.fileLocationOnS3;
+          await user.save();
 
           return {
             url: userMoodImgFileOnS3.fileLocationOnS3,

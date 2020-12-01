@@ -19,6 +19,11 @@ const userSchema = new Schema(
       required: true,
       default: "https://www.w3schools.com/howto/img_avatar.png",
     },
+    faceSrc: {
+      type: String,
+      required: true,
+      default: "https://pngimg.com/uploads/face/face_PNG11760.png",
+    },
     password: {
       type: String,
       required: true,

@@ -14,6 +14,7 @@ const {
 } = require("../../common/awsSetup/s3FileUpload");
 const { checkAdmin } = require("../../common/utils/checkAdmin");
 const { default: Axios } = require("axios");
+const { nanoid } = require("nanoid");
 
 module.exports = {
   Query: {
@@ -131,6 +132,12 @@ module.exports = {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
         if (user) {
+          const {
+            data: { userMoodtype },
+          } = await Axios.get(
+            `${process.env.MODEL_APT_URL}/detectEmotion?url=${user.faceSrc}`
+          );
+          console.log(userMoodtype);
           const songs = await Song.find({}).limit(5);
           return songs;
         }
@@ -161,7 +168,7 @@ module.exports = {
 
           const songFileOnS3 = await uploadToS3(
             createReadStreamForSong,
-            songFilename.replace(/ /g, "")
+            `${nanoid(8) + songFilename.replace(/ /g, "")}`
           );
           console.log("songURL", songFileOnS3.fileLocationOnS3);
 
@@ -174,14 +181,16 @@ module.exports = {
 
           const coverFileOnS3 = await uploadToS3(
             createReadStreamForCover,
-            coverFilename.replace(/ /g, "")
+            `${nanoid(8) + coverFilename.replace(/ /g, "")}`
           );
           console.log("coverURL", coverFileOnS3.fileLocationOnS3);
           const {
-            data: { moodType },
+            data: { moodType = "bad" },
           } = await Axios.get(
             `${process.env.MODEL_APT_URL}?url=${songFileOnS3.fileLocationOnS3}`
           );
+
+          console.log(songFileOnS3.fileLocationOnS3);
 
           const songObject = {
             name,
