@@ -128,18 +128,56 @@ module.exports = {
       }
     },
     async getPlayList(_, __, context) {
+      // Randomly shuffle songs
+      const shuffleSongs = (array) => {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      };
+
       try {
         const { id } = checkAuth(context);
         const user = await User.findById(id);
         if (user) {
+          console.log("userface", user.faceSrc);
           const {
             data: { userMoodtype },
           } = await Axios.get(
             `${process.env.MODEL_APT_URL}/detectEmotion?url=${user.faceSrc}`
           );
-          console.log(userMoodtype);
-          const songs = await Song.find({}).limit(5);
-          return songs;
+
+          // if (!userMoodtype) {
+          //   console.log("Mood Type undefinde");
+          //   const songs = await Song.find({}).sort({ playCount: -1 }).limit(10);
+          //   return songs;
+          // }
+          if (userMoodtype === "sad") {
+            console.log("Mood Type sad");
+            const songs = await Song.find({ moodType: "happy" }).limit(10);
+            shuffleSongs(songs);
+            return songs;
+          } else if (userMoodtype === "happy") {
+            console.log("Mood Type happy");
+            const songs = await Song.find({ moodType: "neutral" }).limit(10);
+            shuffleSongs(songs);
+            return songs;
+          } else if (userMoodtype === "angy") {
+            console.log("Mood Type happy");
+            const songs = await Song.find({ moodType: "happy" }).limit(10);
+            shuffleSongs(songs);
+            return songs;
+          } else if (userMoodtype === "neutral") {
+            console.log("Mood Type happy");
+            const songs = await Song.find({ moodType: "neutral" }).limit(10);
+            shuffleSongs(songs);
+            return songs;
+          } else {
+            // All songs
+            const songs = await Song.find({}).limit(10);
+            shuffleSongs(songs);
+            return songs;
+          }
         }
         return new Error("User not found");
       } catch (err) {
