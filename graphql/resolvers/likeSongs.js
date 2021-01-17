@@ -36,7 +36,7 @@ module.exports = {
           return "Song unLike";
         }
 
-        const likeSongList = await user.likeSongs.push(songId);
+        const likeSongList = await user.likeSongs.unshift(songId);
         await user.save();
         if (likeSongList) {
           return "Song Like";
