@@ -6,7 +6,6 @@ const mongoose = require("mongoose");
 
 const typeDefs = require("./graphql/typedefs");
 const resolvers = require("./graphql/resolvers");
-const { MONGODB } = require("./config");
 const { corsWithOptions } = require("./cors");
 
 const server = new ApolloServer({
@@ -22,7 +21,7 @@ app.use(cors(corsWithOptions));
 server.applyMiddleware({ app, cors: false });
 
 mongoose
-  .connect(MONGODB, {
+  .connect(process.env.MONGODB, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
     useCreateIndex: true,
