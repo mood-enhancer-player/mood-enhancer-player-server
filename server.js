@@ -30,6 +30,6 @@ mongoose
     console.log("Mongodb connected");
   });
 
-app.listen({ port: process.env.HOST_PORT }, () => {
+app.listen({ port: process.env.PORT || 9090 }, () => {
   console.log(`🚀 Server ready at ${process.env.HOST_URL}`);
 });
