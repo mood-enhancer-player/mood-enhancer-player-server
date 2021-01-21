@@ -31,5 +31,5 @@ mongoose
   });
 
 app.listen({ port: process.env.PORT || 9090 }, () => {
-  console.log(`🚀 Server ready at ${process.env.HOST_URL}`);
+  console.log(`🚀 Server ready at ${process.env.PORT}`);
 });
