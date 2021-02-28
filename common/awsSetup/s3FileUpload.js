@@ -15,19 +15,25 @@ const uploadToS3 = async (stream, filename) => {
     Body: stream(),
   };
 
-  const fileLocationOnS3 = new Promise((resolve, reject) => {
-    s3.upload(params, (err, data) => {
-      if (err) {
-        reject(err);
-      }
-      resolve(data.Location);
-    });
-  });
-
-  return {
-    fileLocationOnS3: await fileLocationOnS3,
-  };
+  // const fileLocationOnS3 = new Promise((resolve, reject) => {
+  //   s3.upload(params, (err, data) => {
+  //     if (err) {
+  //       reject(err);
+  //     }
+  //     resolve(data.Location);
+  //   });
+  // });
+  try {
+    const fileLocationOnS3 = await s3.upload(params).promise();
+    return {
+      fileLocationOnS3: fileLocationOnS3.Location,
+    };
+  } catch (error) {
+    console.log(error);
+    throw new Error(error);
+  }
 };
+
 
 const deleteToS3 = async (filename) => {
   const s3 = new AWS.S3({
