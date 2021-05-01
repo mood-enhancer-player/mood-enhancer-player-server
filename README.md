@@ -58,7 +58,7 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/mood-enhancer-player/mood-enhancer-player-client.git
+   git clone https://github.com/mood-enhancer-player/mood-enhancer-player-server.git
    ```
 2. Install NPM packages
    ```sh
