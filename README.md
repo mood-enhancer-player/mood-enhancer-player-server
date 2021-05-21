@@ -14,27 +14,52 @@
 
 <!-- ABOUT THE PROJECT -->
 
-# About The Project
+# Mood Enhancer Player
 
-The proposed project focuses on enhancing the users mood by recognizing users emotions and recommending the song playlist on web application.
+It is a Full Stack Music player Web App that helps to enhance your mood by playing songs without any ads.
+  
+## Features
 
-The web based application uses facial recognition to recognize users emotions to creates a playlist which aid the user to enhance its mood.
+- Caching the data using Apollo-client.
+- Like, play, pause, next, previous song.
+- Recommend artist and album by user actions.
+- Responsive and Dark Mode.
+- User can upload his/her profile(AWS S3).
+- User can Play only specific artist songs.
+- Role-based Backend(user/admin)
+- Search song by artist name and song name.
+- Register and login using JWT auth.
+- User Management(Admin)
+- Upload Songs on AWS S3(Admin)
+- Chart Based Analysis(Admin)
 
-For example, If the user is sad the system will recommend and create a playlist which would make the users mood happy.
+## Live Demo
 
-# Built With
+[Click Here](https://moodenhancer.netlify.app) to play around.
+
+## Guest Credentials
+
+```
+Email: testuser@gmail.com
+Password: test@123
+```
+
+# Tech Stack
 
 ## Frontend
 
 - [React](https://reactjs.org/)
 - [Material-Ui](https://material-ui.com/)
 - [Apollo-Client](https://www.apollographql.com/docs/react)
+- [Charjs](https://www.chartjs.org)
 
 ## Backend
 
 - [GraphQL](https://graphql.org)
 - [MongoDB and Mongoose](https://mongoosejs.com/)
 - [Apollo-Server](https://www.apollographql.com/docs/apollo-server/)
+- [Nodejs](https://nodejs.org/en)
+- [Flask](https://flask.palletsprojects.com/en/1.1.x/)
 
 ## Cloud Platform for storage
 
@@ -58,13 +83,13 @@ This is an example of how to list things you need to use the software and how to
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/mood-enhancer-player/mood-enhancer-player-server.git
+   git clone https://github.com/mood-enhancer-player/mood-enhancer-player-client.git
    ```
 2. Install NPM packages
    ```sh
    npm install
    ```
-3. Enter your Credential in `.env`
+3. Enter your Credential in `config.js`
 
 4. To start development server run 
    ```sh
@@ -113,4 +138,3 @@ This is an example of how to list things you need to use the software and how to
 ## License
 
 Distributed under the MIT License. See `LICENSE` for more information.
-
